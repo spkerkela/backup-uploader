@@ -68,15 +68,6 @@ jobs:
         asset_path: build/darwin/amd64/backup-uploader.tar.gz
         asset_name: backup-uploader.darwin.amd64.tar.gz
         asset_content_type: application/gzip
-    - name: Upload darwin/amd64 release asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: build/darwin/arm/backup-uploader.tar.gz
-        asset_name: backup-uploader.darwin.arm.tar.gz
-        asset_content_type: application/gzip
     - name: Upload darwin/arm64 release asset
       uses: actions/upload-release-asset@v1
       env:
