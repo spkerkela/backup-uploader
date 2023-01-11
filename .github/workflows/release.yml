@@ -20,6 +20,8 @@ jobs:
 
     - name: Build
       run: ./build.sh
+    - name: Build release-zips
+      run: ./create-release-packages.sh
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
