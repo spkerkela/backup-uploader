@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -euo pipefail
+#!/usr/bin/env bash
 
 GOOS=windows GOARCH=amd64 go build -o build/windows/amd64/backup-uploader.exe
 GOOS=darwin GOARCH=amd64 go build -o build/darwin/amd64/backup-uploader
