@@ -5,6 +5,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -29,9 +30,10 @@ func main() {
 		log.Fatal("Could not read file:", err.Error())
 	}
 
+	fileNameOnly := filepath.Base(*fileName)
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
 		Bucket: aws.String(*bucketName),
-		Key:    aws.String(*prefix + "/" + *fileName),
+		Key:    aws.String(*prefix + "/" + fileNameOnly),
 		Body:   fileToSend,
 	})
 
