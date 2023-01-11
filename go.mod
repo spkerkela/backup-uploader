@@ -1,4 +1,4 @@
-module spkerkela/backup-uploader
+module github.com/spkerkela/backup-uploader
 
 go 1.19
 
