@@ -21,6 +21,7 @@ func main() {
 	bucketName := flag.String("bucket", "backups", "Bucket to upload to")
 	prefix := flag.String("prefix", "path", "path in bucket to upload to")
 	fileName := flag.String("file", "file", "File to upload")
+	filter := flag.String("filter", "", "Only send files matching this filter")
 	flag.Parse()
 
 	client := s3.NewFromConfig(cfg)
@@ -31,6 +32,12 @@ func main() {
 	}
 
 	fileNameOnly := filepath.Base(*fileName)
+	if *filter != "" {
+		if matched, _ := filepath.Match(*filter, fileNameOnly); !matched {
+			log.Printf("Skipping file %s, does not match filter %s", fileNameOnly, *filter)
+			os.Exit(0)
+		}
+	}
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
 		Bucket: aws.String(*bucketName),
 		Key:    aws.String(*prefix + "/" + fileNameOnly),
