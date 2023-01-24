@@ -16,9 +16,10 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
-
     - name: Build
       run: ./build.sh
+    - name: Test
+      run: ./run_tests.sh
     - name: Build release-zips
       run: ./create-release-packages.sh
     - name: Create Release

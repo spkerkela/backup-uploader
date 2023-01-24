@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -14,7 +15,21 @@ import (
 )
 
 func main() {
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	testReslover := aws.EndpointResolverFunc(func(service, region string) (aws.Endpoint, error) {
+		testString := os.Getenv("BACKUP_UPLOADER_TEST")
+		testString = strings.ToLower(testString)
+
+		if testString == "true" {
+			return aws.Endpoint{
+				PartitionID:       "aws",
+				URL:               "http://localhost:4566",
+				SigningRegion:     "us-east-1",
+				HostnameImmutable: true,
+			}, nil
+		}
+		return aws.Endpoint{}, &aws.EndpointNotFoundError{}
+	})
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithEndpointResolver(testReslover))
 	if err != nil {
 		log.Fatal("Could not load AWS config")
 	}
