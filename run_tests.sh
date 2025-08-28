@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-docker-compose up -d
+docker compose up -d
 sleep 5
 export AWS_ACCESS_KEY_ID=test
 export AWS_SECRET_ACCESS_KEY=test
